@@ -108,7 +108,10 @@ if index == '3':
             time.sleep(10)
             LikesCrawler(uid)
             count += 1
-            
+# df3可能會因為 driver 的版本問題在執行過程出現 WebDriverException
+# 若重覆發生，請確認 driver 版本，搜尋 stackoverflow，或移至 jupyter notebook 更改 count 值手動處理
+# 細節可詢問 manchenlee
+# (其實可以再加個 try except 輸出當前的 dataframe 但我好懶zz)  
     print("======== df3 complete ========")
     df3 = pd.DataFrame(zip(Uid3, Song3, ArtistUid), columns = ['Uid', 'Liked Song', 'ArtistUid'])
     #print(df)
