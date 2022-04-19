@@ -1,7 +1,7 @@
 # crawler
 妍伶：我把總共 795 名的音樂人ID 透過 sorted()的方式進行字母由小到大排序，  
-因為 df6 的資料量過於龐大，一次爬蟲須爬超過10小時，所以我將 795 名音樂人切分成 8 個區段，
-分別產出 df6-0.csv、df6-1.csv 到 df6-7.csv
+因為 df6 的資料量過於龐大，一次爬蟲須爬超過10小時，所以我將 795 名音樂人切分成 8 個區段（如下），  
+分別產出 df6-0.csv、df6-1.csv 到 df6-7.csv。
 
 ```python
 musicianID_list = sorted(list(musicianID))
