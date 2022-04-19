@@ -25,8 +25,8 @@ musicianID_list6 = musicianID_list[600:700]
 musicianID_list7 = musicianID_list[700:795]
 ```
 
-目前對表六的整理：
-df6-0.csv：151933 筆資料  
+目前對表六的整理：  
+df6-0.csv：151932 筆資料  
 df6-1.csv：134966 筆資料  
 df6-2.csv：筆資料  
 df6-3.csv：79776 筆資料  
