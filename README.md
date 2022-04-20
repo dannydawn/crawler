@@ -28,9 +28,9 @@ musicianID_list7 = musicianID_list[700:795]
 目前對表六的整理：  
 df6-0.csv：151932 筆資料  
 df6-1.csv：134966 筆資料  
-df6-2.csv：筆資料  
+df6-2.csv：207652 筆資料  
 df6-3.csv：79776 筆資料  
 df6-4.csv：143900 筆資料  
-df6-5.csv：筆資料  
-df6-6.csv：筆資料  
-df6-7.csv：筆資料  
+df6-5.csv：170314 筆資料  
+df6-6.csv：255459 筆資料  
+df6-7.csv：120513 筆資料  
