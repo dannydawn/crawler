@@ -37,17 +37,20 @@ def informCrawler(uid, song):
     #print(playcount)
     playcount = playcount.replace(',', '')
     likecount = soup.find(id="countup-like").getText()
-    sharecount = soup.find(class_="mb-0 text-center js-share-count").getText()
+    likecount = likecount.replace(',', '')
+    sharecount = soup.find(class_="mb-0 text-center js-share-count")['data-share-count']
     temp = soup.find(class_="text-truncate text-white opacity-72")
     catagory = temp.find(href = True).getText()
     publishtime = soup.find(class_="text-gray-light mb-2").getText()[-10:]
-        
+    #print(likecount)
+    #print(sharecount)
     Playcount.append(playcount)
     Likecount.append(likecount)
     Sharecount.append(sharecount)
     Catagory.append(catagory)
     PublishTime.append(publishtime)
-    
+
+ 
 count = 200
 for d in data[200:]:
     try:
