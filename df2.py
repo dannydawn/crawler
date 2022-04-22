@@ -23,7 +23,7 @@ def informCrawler(uid, song):
     url = "https://streetvoice.com/" + uid + "/songs/" + song
     #print(url)
     driver = webdriver.Edge(executable_path='msedgedriver.exe')
-    driver.implicitly_wait(10) 
+    #driver.implicitly_wait(10) 
     driver.maximize_window()
     driver.set_page_load_timeout(600)
     driver.get(url)
@@ -51,8 +51,8 @@ def informCrawler(uid, song):
     PublishTime.append(publishtime)
 
  
-count = 200
-for d in data[200:]:
+count = 918
+for d in data[918:1000]:
     try:
         informCrawler(d[0], d[1])
         Uid.append(d[0])
@@ -62,7 +62,7 @@ for d in data[200:]:
         print(count)
         df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-        df2.to_csv('df2.csv', index=False)
+        df2.to_csv('df2_010.csv', index=False)
         time.sleep(10)
         informCrawler(d[0], d[1])
         Uid.append(d[0])
@@ -71,4 +71,4 @@ for d in data[200:]:
       
 df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-df2.to_csv('df2.csv', index=False)  
+df2.to_csv('df2_010.csv', index=False)  
