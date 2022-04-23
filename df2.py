@@ -51,8 +51,8 @@ def informCrawler(uid, song):
     PublishTime.append(publishtime)
 
  
-count = 2000
-for d in data[2000:3000]:
+count = 2256
+for d in data[2256:3000]:
     try:
         informCrawler(d[0], d[1])
         Uid.append(d[0])
