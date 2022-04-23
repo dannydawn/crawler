@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver import Edge
+#from selenium.webdriver import Edge
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 
 data = np.array( pd.read_csv('df2_pre.csv', header=None))[1:]
-print(data[0][1])
+#print(data[0][1])
 
 Uid = []
 Song = []
@@ -22,7 +22,7 @@ PublishTime = []
 def informCrawler(uid, song):
     url = "https://streetvoice.com/" + uid + "/songs/" + song
     #print(url)
-    driver = webdriver.Edge(executable_path='msedgedriver.exe')
+    driver = webdriver.Chrome(executable_path="chromedriver.exe")
     #driver.implicitly_wait(10) 
     driver.maximize_window()
     driver.set_page_load_timeout(600)
@@ -51,8 +51,8 @@ def informCrawler(uid, song):
     PublishTime.append(publishtime)
 
  
-count = 918
-for d in data[918:1000]:
+count = 2000
+for d in data[2000:3000]:
     try:
         informCrawler(d[0], d[1])
         Uid.append(d[0])
@@ -62,8 +62,8 @@ for d in data[918:1000]:
         print(count)
         df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-        df2.to_csv('df2_010.csv', index=False)
-        time.sleep(10)
+        df2.to_csv('df2_030.csv', index=False)
+        time.sleep(30)
         informCrawler(d[0], d[1])
         Uid.append(d[0])
         Song.append(d[1])
@@ -71,4 +71,4 @@ for d in data[918:1000]:
       
 df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-df2.to_csv('df2_010.csv', index=False)  
+df2.to_csv('df2_030.csv', index=False)  
