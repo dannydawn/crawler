@@ -1,28 +1,29 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 #from selenium.webdriver import Edge
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 import time, re
+import csv
+#import concurrent.futures
 import numpy as np
 import pandas as pd
 
+# 讀取 uid 和 song 的 df2_pre
 data = np.array( pd.read_csv('df2_pre.csv', header=None))[1:]
 #print(data[0][1])
 
-Uid = []
-Song = []
-Playcount = []
-Likecount = []
-Sharecount = []
-Catagory = []
-PublishTime = []
-
-def informCrawler(uid, song):
+def informCrawler(uid, song, writer):
     url = "https://streetvoice.com/" + uid + "/songs/" + song
     #print(url)
-    driver = webdriver.Chrome(executable_path="chromedriver.exe")
+    # 設定不顯示視窗
+    chrome_options = Options()
+    
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(
+        executable_path='chromedriver.exe', options=chrome_options)
     #driver.implicitly_wait(10) 
     driver.maximize_window()
     driver.set_page_load_timeout(600)
@@ -32,6 +33,7 @@ def informCrawler(uid, song):
 
     soup = BeautifulSoup(driver.page_source, 'html5lib')
     driver.quit()
+    # 如果樂曲還存在就爬取資訊
     if soup.find(class_ = "list-inline list-item-buttons align-items-center justify-content-end"):
         playcount = soup.find(id="countup-play").getText()
         #print(playcount)
@@ -44,29 +46,80 @@ def informCrawler(uid, song):
         publishtime = soup.find(class_="text-gray-light mb-2").getText()[-10:]
         #print(likecount)
         #print(sharecount)
-        Uid.append(uid)
-        Song.append(song)
-        Playcount.append(playcount)
-        Likecount.append(likecount)
-        Sharecount.append(sharecount)
-        Catagory.append(catagory)
-        PublishTime.append(publishtime)
+        writer.writerow([uid, song, playcount, likecount, sharecount, catagory, publishtime])
+'''
+Uid = []
+Song = []
+Playcount = []
+Likecount = []
+Sharecount = []
+Catagory = []
+PublishTime = []
+'''
 
- 
-count = 4000
-for d in data[4000:5000]:
-    try:
-        informCrawler(d[0], d[1])
-        count += 1
-    except:
-        print(count)
-        df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
-                   columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-        df2.to_csv('df2_040.csv', index=False)
-        time.sleep(30)
-        informCrawler(d[0], d[1])
-        count += 1
+data_01 = data[4000:4400]
+data_02 = data[4400:4800]
+data_03 = data[4800:5200]
+data_04 = data[5200:5600]
+data_05 = data[5600:6000]
+data_06 = data[6000:6400]
+data_07 = data[6400:6800]
+data_08 = data[6800:7200]
+data_09 = data[7200:7600]
+data_10 = data[7600:8000]
+data_11 = data[8000:8400]
+data_12 = data[8400:8800]
+data_13 = data[8800:9200]
+data_14 = data[9200:9600]
+data_15 = data[9600:10000]
+data_16 = data[10000:10400]
+data_17 = data[10400:10800]
+data_18 = data[10800:]
+
+with open('df2_1.csv', 'w', newline='', encoding="utf8") as csvfile:
+    writer = csv.writer(csvfile)
+    # 如果發生 Exception，會 print 出當前執行的 index (count)
+    count = 0
+    for d in data_01:
+        try:
+            informCrawler(d[0], d[1], writer)
+            count += 1
+        except:
+            print(count)
+            time.sleep(30)
+            informCrawler(d[0], d[1], writer)
+            count += 1
+
+
+'''
+def scrape(count, data):
+    path = "df2_" + str(count) + ".csv"
+    for d in data:
+        try:
+            informCrawler(d[0], d[1])
+            #count += 1
+        except:
+            print(count)
+            df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
+                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
+            df2.to_csv(path, index=False)  
+            time.sleep(30)
+            informCrawler(d[0], d[1])
+            #count += 1
       
-df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
-                   columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-df2.to_csv('df2_040.csv', index=False)  
+    df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
+                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
+    df2.to_csv(path, index=False)  
+
+
+data_for_multi = [(4000, data_05), 
+                  (5000, data_06),
+                  (6000, data_07),
+                  (7000, data_08),
+                  (8000, data_09),
+                  (9000, data_10),
+                  (10000, data_11),
+                  (11000, data_12),]
+with concurrent.futures.ThreadPoolExecutor(max_workers = 8) as executor:
+    executor.map(scrape, data_for_multi)
+'''
