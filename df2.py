@@ -76,11 +76,11 @@ data_16 = data[10000:10400]
 data_17 = data[10400:10800]
 data_18 = data[10800:]
 
-with open('df2_1.csv', 'w', newline='', encoding="utf8") as csvfile:
+with open('df2_8.csv', 'a', newline='', encoding="utf8") as csvfile:
     writer = csv.writer(csvfile)
     # 如果發生 Exception，會 print 出當前執行的 index (count)
-    count = 0
-    for d in data_01:
+    count = 231
+    for d in data_08[231:]:
         try:
             informCrawler(d[0], d[1], writer)
             count += 1
