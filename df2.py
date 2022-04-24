@@ -32,43 +32,41 @@ def informCrawler(uid, song):
 
     soup = BeautifulSoup(driver.page_source, 'html5lib')
     driver.quit()
-
-    playcount = soup.find(id="countup-play").getText()
-    #print(playcount)
-    playcount = playcount.replace(',', '')
-    likecount = soup.find(id="countup-like").getText()
-    likecount = likecount.replace(',', '')
-    sharecount = soup.find(class_="mb-0 text-center js-share-count")['data-share-count']
-    temp = soup.find(class_="text-truncate text-white opacity-72")
-    catagory = temp.find(href = True).getText()
-    publishtime = soup.find(class_="text-gray-light mb-2").getText()[-10:]
-    #print(likecount)
-    #print(sharecount)
-    Playcount.append(playcount)
-    Likecount.append(likecount)
-    Sharecount.append(sharecount)
-    Catagory.append(catagory)
-    PublishTime.append(publishtime)
+    if soup.find(class_ = "list-inline list-item-buttons align-items-center justify-content-end"):
+        playcount = soup.find(id="countup-play").getText()
+        #print(playcount)
+        playcount = playcount.replace(',', '')
+        likecount = soup.find(id="countup-like").getText()
+        likecount = likecount.replace(',', '')
+        sharecount = soup.find(class_="mb-0 text-center js-share-count")['data-share-count']
+        temp = soup.find(class_="text-truncate text-white opacity-72")
+        catagory = temp.find(href = True).getText()
+        publishtime = soup.find(class_="text-gray-light mb-2").getText()[-10:]
+        #print(likecount)
+        #print(sharecount)
+        Uid.append(uid)
+        Song.append(song)
+        Playcount.append(playcount)
+        Likecount.append(likecount)
+        Sharecount.append(sharecount)
+        Catagory.append(catagory)
+        PublishTime.append(publishtime)
 
  
-count = 2256
-for d in data[2256:3000]:
+count = 4000
+for d in data[4000:5000]:
     try:
         informCrawler(d[0], d[1])
-        Uid.append(d[0])
-        Song.append(d[1])
         count += 1
     except:
         print(count)
         df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-        df2.to_csv('df2_030.csv', index=False)
+        df2.to_csv('df2_040.csv', index=False)
         time.sleep(30)
         informCrawler(d[0], d[1])
-        Uid.append(d[0])
-        Song.append(d[1])
         count += 1
       
 df2 = pd.DataFrame(zip(Uid, Song, Playcount, Likecount, Sharecount, Catagory, PublishTime), 
                    columns = ['Uid', 'Song', 'Play count', 'Like count', 'Share count', 'Catagory', 'Publish time'])
-df2.to_csv('df2_030.csv', index=False)  
+df2.to_csv('df2_040.csv', index=False)  
