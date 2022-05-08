@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 # 讀取 uid 和 song 的 df2_pre
-data = np.array( pd.read_csv('df2_pre.csv', header=None))[1:]
+data = np.array( pd.read_csv('df3-2_pre.csv', header=None))[1:]
 #print(data[0][1])
 
 def informCrawler(uid, song, writer):
@@ -57,30 +57,29 @@ Catagory = []
 PublishTime = []
 '''
 
-data_01 = data[4000:4400]
-data_02 = data[4400:4800]
-data_03 = data[4800:5200]
-data_04 = data[5200:5600]
-data_05 = data[5600:6000]
-data_06 = data[6000:6400]
-data_07 = data[6400:6800]
-data_08 = data[6800:7200]
-data_09 = data[7200:7600]
-data_10 = data[7600:8000]
-data_11 = data[8000:8400]
-data_12 = data[8400:8800]
-data_13 = data[8800:9200]
-data_14 = data[9200:9600]
-data_15 = data[9600:10000]
-data_16 = data[10000:10400]
-data_17 = data[10400:10800]
-data_18 = data[10800:]
+data_01 = data[0:400]
+data_02 = data[400:800]
+data_03 = data[800:1200]
+data_04 = data[1200:1600]
+data_05 = data[1600:2000]
+data_06 = data[2000:2400]
+data_07 = data[2400:2800]
+data_08 = data[2800:3200]
+data_09 = data[3200:3600]
+data_10 = data[3600:4000]
+data_11 = data[4000:4400]
+data_12 = data[4400:4800]
+data_13 = data[4800:5200]
+data_14 = data[5200:5600]
+data_15 = data[5600:6000]
+data_16 = data[6000:6400]
+data_17 = data[6400:]
 
-with open('df2_18.csv', 'w', newline='', encoding="utf8") as csvfile:
+with open('df3-2_1.csv', 'w', newline='', encoding="utf8") as csvfile:
     writer = csv.writer(csvfile)
     # 如果發生 Exception，會 print 出當前執行的 index (count)
     count = 0
-    for d in data_18[0:]:
+    for d in data_01[0:]:
         try:
             informCrawler(d[0], d[1], writer)
             count += 1
