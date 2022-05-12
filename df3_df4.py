@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
@@ -132,4 +133,4 @@ elif index == '4':
 
     df4 = pd.DataFrame(zip(Uid4, Song4, CollabUid), columns = ['Uid', 'Collab Song', 'CollabUid'])
     #print(df)
-    df4.to_csv('df4.csv', index=False)
+    df4.to_csv('df4_new.csv', index=False)
